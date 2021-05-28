@@ -115,7 +115,7 @@ function AuthProvider({ children, ...rest } : AuthProviderProps) {
 }
 
 
-function useAuth() {
+const useAuth = () => {
 	const context = useContext(AuthContext);
 
 	return context;
