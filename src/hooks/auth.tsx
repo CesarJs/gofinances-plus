@@ -3,6 +3,10 @@ import React, { createContext, ReactNode, useContext, useState, useEffect } from
 import * as Google from 'expo-google-app-auth';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Category } from '../screens/CategoryCreate';
+import { categories } from '../utils/categories';
+
+
 
 export const AuthContext = createContext({} as IAuthContextData);
 
@@ -18,9 +22,10 @@ interface User {
 
 interface IAuthContextData {
 	user: User;
-	signInWithGoogle(): Promise<void>,
-	signInWithApple(): Promise<void>,
-	sigOut(): Promise<void>,
+	categories: Category[];
+	signInWithGoogle(): Promise<void>;
+	signInWithApple(): Promise<void>;
+	sigOut(): Promise<void>;
 	userStorageLoading: boolean;
 }
 
@@ -28,6 +33,7 @@ function AuthProvider({ children, ...rest } : AuthProviderProps) {
 
 	const [user, setUser] = useState<User>({} as User);
 	const [ userStorageLoading, setUserStorageLoading ] = useState(true);
+	const [ categories, setCategories ] = useState<Category[]>([] as Category[]);
 	const dataKey = '@gofinacen:user';
 
 	async function signInWithGoogle(){
@@ -90,13 +96,34 @@ function AuthProvider({ children, ...rest } : AuthProviderProps) {
 		setUser({} as User);
 		await AsyncStorage.removeItem(dataKey);
 	}
+
+
+
 	useEffect(() => {
+		async function getCategories(){
+			try {
+				const key = `@gofinacen:transacations_type:${user.id}`;
+				const dataStorage =  await AsyncStorage.getItem(key);
+				if(dataStorage){
+					const datacategories = JSON.parse(dataStorage) as Category[];
+					setCategories(datacategories);
+				}else{
+					setCategories(categories);
+				}
+			} catch (error) {
+				throw new Error(error);
+
+			}
+
+		}
+
 		async function getUserAsync() {
 			const userStoraged =  await AsyncStorage.getItem(dataKey);
 			if(userStoraged){
 				const userLogged = JSON.parse(userStoraged) as User;
 				setUser(userLogged);
 			}
+			getCategories();
 			setUserStorageLoading(false);
 		}
 		getUserAsync();
@@ -104,10 +131,11 @@ function AuthProvider({ children, ...rest } : AuthProviderProps) {
 	return(
 		<AuthContext.Provider value={{
 			user,
+			categories,
 			signInWithGoogle,
 			signInWithApple,
 			sigOut,
-			userStorageLoading
+			userStorageLoading,
 			}} >
 			{ children }
 		</AuthContext.Provider>

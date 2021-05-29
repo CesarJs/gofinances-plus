@@ -47,7 +47,8 @@ export function Register() {
 
 	const [ category, setCategory ] = useState({
 		key: 'category',
-		name: 'Categoria'
+		name: 'Categoria',
+		type: ''
 	});
 	const navigation = useNavigation();
 	const {
@@ -63,12 +64,13 @@ export function Register() {
 		setTransacionType('');
 		setCategory({
 			key: 'category',
-			name: 'Categoria'
+			name: 'Categoria',
+			type: ''
 		});
 		reset();
 	}
 	function handleTransactionTypeSelect(type: 'positive' | 'negative'){
-		setTransacionType(type);
+		setTransacionType(type === transactionType ? '' : type);
 	}
 	function handleOpenSelectCategoryModal(){
 		setShowModal(true);
@@ -112,33 +114,7 @@ export function Register() {
 		}
 	}
 
-	// useEffect(() => {
-	// 	// async function loadData(){
-	// 	// 	try {
-	// 	// 		const currentData = await AsyncStorage.getItem(dataKey);
-	// 	// 		console.log(JSON.parse(currentData!));
-	// 	// 	} catch (error) {
-	// 	// 		console.log(error);
-	// 	// 		Alert.alert("Não foi possivel carregar as informações, tente novamente.");
-	// 	// 	}
 
-	// 	// }
-	// 	// loadData();
-
-	// 	// async function deleteData(){
-	// 	// 	const currentData = await AsyncStorage.getItem(dataKey);
-	// 	// 	if(currentData){
-	// 	// 		try {
-	// 	// 			await AsyncStorage.removeItem(dataKey);
-	// 	// 		} catch (error) {
-	// 	// 			console.log(error);
-	// 	// 			Alert.alert('Não foi possivel deletar, por favor tente novamente!');
-	// 	// 		}
-	// 	// 	}
-	// 	// }
-
-	// 	// deleteData();
-	// });
 	return (
 		<TouchableWithoutFeedback
 			onPress={Keyboard.dismiss}
@@ -191,6 +167,8 @@ export function Register() {
 						<CategorySelect
 							category={category}
 							setCategory={setCategory}
+							transactionType={transactionType}
+							setTransacionType={setTransacionType}
 							closeSelectCategory={handleCloseSelectCategoryModal}
 						/>
 					</Modal>

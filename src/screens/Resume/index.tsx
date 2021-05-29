@@ -21,7 +21,7 @@ import {
 	MounthSelectIcon,
 	Mounth,
  } from './styles';
-import { categories } from '../../utils/categories';
+import {  } from '../../utils/categories';
 
 
  export interface TransactionProps {

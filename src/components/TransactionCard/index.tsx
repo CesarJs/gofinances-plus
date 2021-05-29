@@ -1,5 +1,6 @@
 import React from 'react';
-import { categories } from '../../utils/categories';
+import { useAuth } from '../../hooks/auth';
+
 
 import {
 	Container,
@@ -24,7 +25,8 @@ interface Props {
 }
 
 export function TransactionCard({ data } : Props){
-	const [ category]  = categories.filter((item) => item.key === data.category);
+	const { categories } = useAuth();
+	const  category   = categories.filter((item) => item.key === data.category);
 	return (
 
 		<Container>
