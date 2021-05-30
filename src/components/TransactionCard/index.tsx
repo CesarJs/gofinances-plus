@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAuth } from '../../hooks/auth';
 
-
 import {
 	Container,
 	Title,
@@ -24,9 +23,14 @@ interface Props {
 	data: TransactionCardProps;
 }
 
+
 export function TransactionCard({ data } : Props){
-	const { categories } = useAuth();
-	const  category   = categories.filter((item) => item.key === data.category);
+	const { categories, getCategories } = useAuth();
+	if(categories.length ===0){
+		getCategories();
+	}
+	const  category   = categories.filter((item) => item.key === data.category)[0];
+
 	return (
 
 		<Container>
@@ -39,9 +43,9 @@ export function TransactionCard({ data } : Props){
 			</Amount>
 			<Footer>
 				<Category>
-					<Icon name={category.icon} />
+					<Icon name={category?.icon ? category.icon : 'tv' } />
 					<CategoryName>
-						{category.name}
+						{category?.name ? category.name : 'erro ao carregar'}
 					</CategoryName>
 				</Category>
 				<Date>

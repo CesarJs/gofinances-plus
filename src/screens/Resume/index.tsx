@@ -21,7 +21,7 @@ import {
 	MounthSelectIcon,
 	Mounth,
  } from './styles';
-import {  } from '../../utils/categories';
+// import { categories } from '../../utils/categories';
 
 
  export interface TransactionProps {
@@ -42,10 +42,11 @@ interface CategoryDataProps {
 }
 export function Resume() {
 	const [ isLoading , setIsLoading ] = useState(false);
+	const [ typeTransaction , setTypeTransaction ] = useState('negative');
 	const [selectedDate , setSelectedDate] = useState(new Date());
 	const [totalByCategories , setTotalByCategories] = useState<CategoryDataProps[]>([]);
 	const theme = useTheme();
-	const { user } = useAuth();
+	const { user, categories, getCategories } = useAuth();
 
 	function handleDateChange(action : 'next' | 'previous'){
 		setIsLoading(true);
@@ -55,17 +56,21 @@ export function Resume() {
 			setSelectedDate(subMonths(selectedDate, 1));
 		}
 	}
-
+	function handleChangeTypeTransaction(){
+		setTypeTransaction(typeTransaction === 'negative' ? 'positive' : 'negative' );
+	}
 	async function loadData(){
-
-
+		if(categories.length === 0 ){
+			getCategories();
+		}
 		const dataKey = `@gofinacen:transacations_user:${user.id}`;
 		const response = await AsyncStorage.getItem(dataKey);
 		const responseFormatted = response ? JSON.parse(response) : [];
 
+
 		const expensives = responseFormatted
 		.filter((expensive: TransactionProps) =>
-		expensive.type === 'negative' &&
+		expensive.type === typeTransaction &&
 		new Date(expensive.date).getMonth() === selectedDate.getMonth() &&
 		new Date(expensive.date).getFullYear() === selectedDate.getFullYear()
 		);
@@ -93,8 +98,8 @@ export function Resume() {
 				const percentFormatted = `${percent.toFixed(0)}%`;
 				totalByCategory.push({
 					key: category.key,
-					name: category.name,
-					color: category.color,
+					name: category.name ? category.name : 'erro ao carregar',
+					color: category.color? category.color : '#000000',
 					total: categorySum,
 					totalFormatted: total,
 					percent,
@@ -108,10 +113,13 @@ export function Resume() {
 	}
 	useEffect(useCallback(() => {
 		loadData();
-	}, [selectedDate]));
+	}, [selectedDate, typeTransaction]));
 	return(
 		<Container>
-			<Header title="Resumo"/>
+			<Header
+				title={`Resumo ${typeTransaction === 'negative' ?  ' Saídas ': ' Entradas'}`}
+				rightButton={handleChangeTypeTransaction}
+			/>
 
 			{isLoading ?
 				<LoadContainer>

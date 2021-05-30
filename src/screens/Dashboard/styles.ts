@@ -92,7 +92,7 @@ export const  TransactionList = styled(
 	showsVerticalScrollIndicator: false,
 	contentContainerStyle:{
 		paddingBottom: getBottomSpace()
-	}
+	},
 })``;
 
 

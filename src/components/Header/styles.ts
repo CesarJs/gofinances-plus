@@ -6,9 +6,11 @@ export const Container = styled.View`
 	background-color: ${({ theme }) => theme.colors.primary};
 	width: 100%;
 	height: ${RFValue(113)}px;
-	align-items: center;
-	justify-content: flex-end;
-	padding-bottom: 19px;
+	flex-direction: row;
+	align-items: flex-end;
+	justify-content: space-between;
+	padding-bottom: 10px;
+	padding: 10px 15px;
 `;
 
 export const Title = styled.Text`
@@ -18,3 +20,9 @@ export const Title = styled.Text`
 	font-size: ${RFValue(18)}px;
 `;
 
+export const LeftButton = styled.TouchableOpacity`
+
+`;
+export const RightButton = styled.TouchableOpacity`
+
+`;

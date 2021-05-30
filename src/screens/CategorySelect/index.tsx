@@ -28,6 +28,8 @@ interface Category {
 	key: string;
 	name: string;
 	type: string;
+	icon?: string;
+
 }
 
 interface Props {
