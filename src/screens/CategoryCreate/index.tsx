@@ -15,7 +15,7 @@ import { useForm } from 'react-hook-form';
 import { Button } from '../../components/Form/Button';
 import { useAuth } from '../../hooks/auth';
 
-import { categories } from '../../utils/categories';
+import { categories_default } from '../../utils/categories';
 import { colors_categorias } from '../../utils/colors_categorias';
 import { iocns_default } from '../../utils/icons';
 
@@ -88,8 +88,8 @@ export function CategoryCreate({
 				const data_ = JSON.parse(dataStorage) as Category[];
 				setCategoriesData(data_);
 			}else{
-				setDataFromStorage(key, categories);
-				setCategoriesData(categories);
+				setDataFromStorage(key, categories_default);
+				setCategoriesData(categories_default);
 			}
 		} catch (error) {
 			throw new Error(error);
