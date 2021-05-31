@@ -12,9 +12,10 @@ interface Props extends RectButtonProps{
 	type: 'up' | 'down';
 	title: string;
 	isActive: boolean;
+	onPress: () => void;
 }
 
-export function TransactionTypeButton({ title , type, isActive,  ...rest} : Props){
+export function TransactionTypeButton({ title , type, isActive, onPress,  ...rest} : Props){
 
 	return(
 		<Container
@@ -23,6 +24,7 @@ export function TransactionTypeButton({ title , type, isActive,  ...rest} : Prop
 
 		>
 			<Button
+				onPress={onPress}
 				{...rest}
 			>
 				<Icon

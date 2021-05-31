@@ -4,7 +4,7 @@ import * as Google from 'expo-google-app-auth';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { categories } from '../utils/categories';
+import { categories_default } from '../utils/categories';
 
 
 
@@ -106,13 +106,14 @@ function AuthProvider({ children, ...rest } : AuthProviderProps) {
 
 	async function getCategories(){
 		try {
+
 			const key = `@gofinacen:transacations_type:${user.id}`;
 			const dataStorage =  await AsyncStorage.getItem(key);
 			if(dataStorage){
 				const datacategories = JSON.parse(dataStorage) as ICategory[];
 				setCategories(datacategories);
 			}else{
-				setCategories(categories);
+				setCategories(categories_default);
 			}
 		} catch (error) {
 			throw new Error(error);
@@ -127,13 +128,15 @@ function AuthProvider({ children, ...rest } : AuthProviderProps) {
 			if(userStoraged){
 				const userLogged = JSON.parse(userStoraged) as User;
 				setUser(userLogged);
-				getCategories();
 			}
 
 			setUserStorageLoading(false);
 		}
+		if(user.id && categories.length === 0){
+			getCategories();
+		}
 		getUserAsync();
-	},[]);
+	},[user]);
 	return(
 		<AuthContext.Provider value={{
 			user,

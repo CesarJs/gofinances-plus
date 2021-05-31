@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Alert } from 'react-native';
+import { Alert, TouchableOpacity } from 'react-native';
 
 import { FlatList } from 'react-native-gesture-handler';
 

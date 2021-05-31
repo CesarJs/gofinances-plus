@@ -1,4 +1,4 @@
-export const categories = [
+export const categories_default = [
 	{ key: 'compras', name: 'Compras', icon: 'shopping-bag', color: '#5636D3', type: 'negative'},
 	{ key: 'alimentação', name: 'Alimentação', icon: 'coffee', color: '#FF872C', type: 'negative'},
 	{ key: 'salário', name: 'Salário', icon: 'dollar-sign', color: '#12A454', type: 'positive'},
