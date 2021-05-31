@@ -8,9 +8,9 @@ import theme from '../../global/styles/theme';
 
 export interface TitleProps{
 	fontSize: number;
-	fontFamily: 'light' | 'medium' | 'bold';
-	titleColor: 'background' | 'background_dark' | 'shape' | 'text' | 'text_dark' | 'detail' | 'attention' | 'success' | 'geral';
-	bgColor?: 'background' | 'background_dark' | 'shape' | 'text' | 'text_dark' | 'detail' | 'attention' | 'success' | 'geral';
+	fontFamily: 'regular' | 'medium' | 'bold';
+	titleColor: 'primary' | 'secondary' | 'secondary_linght' | 'success' | 'seccess_light' | 'attention' | 'attention_light' | 'shape' | 'title' | 'text' | 'text_dark' | 'backgorund';
+	bgColor?: 	'primary' | 'secondary' | 'secondary_linght' | 'success' | 'seccess_light' | 'attention' | 'attention_light' | 'shape' | 'title' | 'text' | 'text_dark' | 'backgorund';
 	marginText?: {
 		horizontal?: number;
 		vertical?: number;
@@ -42,7 +42,7 @@ export const Title = styled.Text<TitleProps>`
 
 	padding: ${({ paddingText }) =>
 	 `${paddingText?.horizontal ? paddingText?.horizontal : 0}px;
-	  ${paddingText?.vertical ? paddingText?.vertical: 0}px;`}
+	  ${paddingText?.vertical ? paddingText?.vertical: 0}px;`};
 
 	margin: ${({ marginText }) =>
 	 `${marginText?.horizontal ? marginText?.horizontal : 0}px;
