@@ -10,6 +10,7 @@ import { useAuth } from '../../hooks/auth';
 
 import { HighLightCard } from '../../components/HighLightCard';
 import { TransactionCard , TransactionCardProps} from '../../components/TransactionCard';
+import { ListEmpty } from '../../components/ListEmpty';
 
 import {
 	Container,
@@ -160,13 +161,28 @@ export function Dashboard(){
 		}
 	}
 
+	async function emptyDataTrnasctions() {
 
+		Alert.alert(
+			"Restaura dados",
+			"Você tem certeza que deseja restaurar os dados de categoria ?",
+			[
+                {
+                    text: 'Cancelar',
+                    onPress: () => false,
+                    style: 'cancel',
+                },
+                {
+					text: 'OK', onPress: () => {},
+					style: 'destructive'
+				},
+            ]
+		);
+		await AsyncStorage.removeItem(dataKey);
+	}
 	useEffect(() => {
 		loadTransacions();
-		async function removeTransactions(){
-
-			const response = await AsyncStorage.removeItem(dataKey);
-		}
+		// emptyDataTrnasctions();
 
 	},[]);
 
@@ -222,12 +238,10 @@ export function Dashboard(){
 				<Transactions>
 					<Title>Listagem </Title>
 					<TransactionList
-						inverted
 						data={transactions}
 						keyExtractor={item => item.id}
-						renderItem={({item}) => <TransactionCard data={item} />
-					}
-
+						renderItem={({item}) => <TransactionCard data={item} /> }
+						ListEmptyComponent={ListEmpty}
 					/>
 				</Transactions>
 			</>}

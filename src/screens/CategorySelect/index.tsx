@@ -12,7 +12,6 @@ import { categories } from '../../utils/categories';
 
 import {
 	Container,
-	Header,
 	Title,
 	Category,
 	Icon,
@@ -23,6 +22,7 @@ import {
 
 } from './styles';
 import { CategoryCreate } from '../CategoryCreate';
+import { Header } from '../../components/Header';
 
 interface Category {
 	key: string;
@@ -108,9 +108,11 @@ export function CategorySelect({
 	}, [categoriesData, transactionType]);
 	return (
 		<Container>
-			<Header>
-				<Title>Categoria</Title>
-			</Header>
+			<Header
+				title={`Categorias`}
+				leftButton={closeSelectCategory}
+			/>
+
 			<FlatList
 				data={categoryFilter}
 				style={{flex: 1, width: '100%'}}

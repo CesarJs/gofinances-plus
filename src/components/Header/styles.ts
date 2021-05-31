@@ -19,10 +19,7 @@ export const Title = styled.Text`
 	color: ${({ theme }) => theme.colors.shape};
 	font-size: ${RFValue(18)}px;
 `;
-
-export const LeftButton = styled.TouchableOpacity`
-
-`;
-export const RightButton = styled.TouchableOpacity`
-
+export const EmptyComponenet = styled.View`
+	opacity: 0;
+	width: 40px;
 `;

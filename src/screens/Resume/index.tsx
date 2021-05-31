@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ActivityIndicator } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 import { VictoryPie } from 'victory-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
@@ -173,6 +174,13 @@ export function Resume() {
 								/>
 								))
 						}
+						{totalByCategories.length === 0 && (
+							<HistoryCard
+							color="#000000"
+							amount=" - "
+							title="Sem lançamentos"
+						/>
+						)}
 					</Content>
 
 			}
