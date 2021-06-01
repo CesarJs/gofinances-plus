@@ -44,10 +44,10 @@ interface CategoryDataProps {
 export function Resume() {
 	const [ isLoading , setIsLoading ] = useState(false);
 	const [ typeTransaction , setTypeTransaction ] = useState('negative');
-	const [selectedDate , setSelectedDate] = useState(new Date());
-	const [totalByCategories , setTotalByCategories] = useState<CategoryDataProps[]>([]);
-	const theme = useTheme();
+	const [ selectedDate , setSelectedDate] = useState(new Date());
+	const [ totalByCategories , setTotalByCategories ] = useState<CategoryDataProps[]>([]);
 	const { user, categories, getCategories } = useAuth();
+	const theme = useTheme();
 
 	function handleDateChange(action : 'next' | 'previous'){
 		setIsLoading(true);
@@ -61,9 +61,7 @@ export function Resume() {
 		setTypeTransaction(typeTransaction === 'negative' ? 'positive' : 'negative' );
 	}
 	async function loadData(){
-		if(categories.length === 0 ){
-			getCategories();
-		}
+
 		const dataKey = `@gofinacen:transacations_user:${user.id}`;
 		const response = await AsyncStorage.getItem(dataKey);
 		const responseFormatted = response ? JSON.parse(response) : [];
@@ -113,6 +111,9 @@ export function Resume() {
 		setIsLoading(false);
 	}
 	useEffect(useCallback(() => {
+		if(categories.length === 0 ){
+			getCategories();
+		}
 		loadData();
 	}, [selectedDate, typeTransaction]));
 	return(
