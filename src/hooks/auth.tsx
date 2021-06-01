@@ -136,7 +136,7 @@ function AuthProvider({ children, ...rest } : AuthProviderProps) {
 			getCategories();
 		}
 		getUserAsync();
-	},[user]);
+	},[]);
 	return(
 		<AuthContext.Provider value={{
 			user,
